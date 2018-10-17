@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Modify Account</title>
-	<link rel="stylesheet" href="style.css"/>
-</head>
-<body>
+
 	<?php
 	require_once('header.php');
 	function validate_form($p)
@@ -34,7 +27,7 @@
 	
 		if ($_POST['oldpw'] == $_POST['newpw'])
 			$message = "Passwords remained the same";
-		elseif ($_POST['login'] != $_SESSION['logged_on_user'])
+		elseif ($_POST['login'] != $_COOKIE['login'])
 			$message = "Enter your username";
 		elseif (!$valid)
 			$message = "Invalid input";
@@ -52,17 +45,20 @@
 		else { $message = "Invalid input"; }
 	}
 	?>
+<div id="container">
 	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
 		<div class= "block">
 			<h1>Change Password</h1><br>
-			<label for="login"><b>Username</b></label>
-			<input type="text" placeholder="Username" name="login" required>
-			<label for="passwd"><b>Password</b></label>
-			<input type="password" placeholder="Old Password" name="oldpw" required>
-			<input type="password" placeholder="New Password" name="newpw" required>
-			<?php echo "<b style='color:red;'>".$message."</b><br>"; ?>
-			<button type="submit">Update</button>
+			<label for="login">Username&nbsp;&nbsp;&nbsp;&nbsp;</label><br>
+			<input type="text" placeholder="Username" name="login" required><br>
+			<label for="passwd">Old password</label><br>
+			<input type="password" placeholder="Old Password" name="oldpw" required><br>
+			<label for="newpw">New password</label><br>
+			<input type="password" placeholder="New Password" name="newpw" required><br>
+			<?php echo "<b style='color:#330000;'>".$message; ?><br>
+			<button type="submit">Update</button><br>
 		</div>
 	</form>
+</div>
 </body>
 </html>

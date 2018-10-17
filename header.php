@@ -1,18 +1,31 @@
 <?php
 
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Camagru</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" type="text/css" media="all">
+</head>
+<body>
+
 <div id='header'>
-	<a href='index.php'><div class='headeritem' id='item0' style='float: left'>Camagru</div></a>
+	<a href='index.php'>Camagru</a>
 	<?php 
 	if ($_COOKIE['login'] == '')
 	{
-		echo "<a href='create.php'><div class='headeritem' id='item2' style='float: right'>Register</div></a>";
-		echo "<a href='login.php'><div class='headeritem' id='item3' style='float: right'>Login</div></a>";
+		echo "<a href='gallery.php'>Gallery</a>";
+		echo "<a href='register.php'>Register</a>";
+		echo "<a href='login.php'>Login</a>";
 	}
 	else
 	{
-		echo "<a href='logout.php'><div class='headeritem' id='item3' style='float: right'>Log out</div></a>"; 
+		echo "<a href='gallery.php'>Gallery</a>";
+		echo "<a href='logout.php'>Log out</a>"; 
+		echo "<a href='settings.php'>Settings</a>";
 	}
 	?>
-	<a href='gallery.php'><div class='headeritem' id='item3' style='float: right'>Gallery</div></a>
 </div>
