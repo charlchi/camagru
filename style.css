@@ -1,0 +1,15 @@
+
+#video {
+	display: none;
+}
+
+#canvas {
+	display: none;
+	margin: 5px;
+	padding: 5px;
+	background-color: black;
+}
+
+#snap {
+	margin:5px;
+}
