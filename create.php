@@ -48,6 +48,9 @@
 			$account['passwd'] = hash('whirlpool', $_POST['passwd']);
 			$logins[] = $account;
 			file_put_contents($file, serialize($logins));
+			$db = unserialize(file_get_contents('resources/db'));
+			$db['users'][$_POST['login']]['points'] = 0;
+			file_put_contents('resources/db', serialize($db));
 			header('Location: login.php');
 		}
 	}

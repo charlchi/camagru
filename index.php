@@ -16,13 +16,12 @@ include_once("header.php")
 
 	<div id="container">
 
-		<input id="snap" type="button" value="Say cheese!" onclick="picture()" />
-		
-		<video id="video" autoplay="autoplay"></video>
+		<div><video id="video" autoplay="autoplay"></video></div>
 		
 		<div id="export_container">
+			<div><input class='headeritem' id="snap" type="button" value="Say cheese!" onclick="picture()" /></div>
 			<div id="picture"></div>
-			<canvas id="canvas"></canvas>
+			<div><canvas id="canvas"></canvas></div>
 		</div>
 
 	</div>
@@ -41,10 +40,11 @@ function start()
 {
     var constraints = {video: true, audio: false};
     devices.getUserMedia(constraints)
-    .then(function(stream){
+    .then(function(stream) {
         videoStream = stream;
         if (window.webkitURL) video.src = window.webkitURL.createObjectURL(stream);
         else if (video.mozSrcObject !== undefined) video.mozSrcObject = stream;
+    	video.style.display = 'block';
     })
     .catch(function(){
         error("Your browser is unsupported, or you don't have a webcam.")
@@ -53,10 +53,12 @@ function start()
 
 function picture()
 {
-	canvas.style.display = 'block';
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	canvas.getContext('2d').drawImage(video, 0, 0);
+	setTimeout(function(){
+		canvas.style.display = 'block';
+		canvas.width = video.videoWidth;
+		canvas.height = video.videoHeight;
+		canvas.getContext('2d').drawImage(video, 0, 0);
+	}, 200);
 }
 
 start();
