@@ -10,6 +10,10 @@ session_start();
 </head>
 <body>
 
+<?php
+include_once("header.php")
+?>
+
 	<div id="container">
 
 		<input id="snap" type="button" value="Say cheese!" onclick="picture()" />
@@ -57,6 +61,9 @@ function picture()
 
 start();
 
+<?php
+	include_once("footer.php")
+?>
 
 </script>
 
