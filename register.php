@@ -2,69 +2,57 @@
 <?php
 
 require_once('header.php');
-function validate_form($p)
-{
-	if ($p['login'] && $p['passwd'] && $p['cpasswd'])
-		return true;
-	return false;
-}
-	
-function account_exists($logins, $login)
-{
-	foreach ($logins as $k => $v)
-		if ($v['login'] == $login)
-			return true;
-	return false;
-}
-	
-$message = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-	$dir = '../private';
-	$file = '../private/passwd';
-	if (!file_exists($dir))
-		mkdir($dir);
-	if (!file_exists($file))
-		file_put_contents($file, null);
-	$valid = validate_form($_POST);
-	$logins = false;
-	if (file_exists($file))
-		$logins = unserialize(file_get_contents($file));
-	if ($_POST['passwd'] != $_POST['cpasswd'])
-		$message = "Passwords didn't match";
-	elseif (!$valid)
-		$message = "Invalid input";
-	elseif (account_exists($logins, $_POST['login']))
-		$message = "Username already in use";
-	else
-	{
-		$account['login'] = $_POST['login'];
-		$account['passwd'] = hash('whirlpool', $_POST['passwd']);
-		$logins[] = $account;
-		file_put_contents($file, serialize($logins));
-		$db = unserialize(file_get_contents('resources/db'));
-		$db['users'][$_POST['login']]['points'] = 0;
-		file_put_contents('resources/db', serialize($db));
-		header('Location: login.php');
-	}
-}
 
 ?>
 
+<script type="text/javascript">
+	
+function validate()
+{
+	var http = new XMLHttpRequest();
+	http.open("POST", "parse_register.php", true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {
+		var message = document.getElementById("message");
+		if (http.readyState == 4 && http.status == 200) {
+			var response = http.responseText;
+			if (response == "OK")
+				window.location.href = "index.php";
+			else
+				message.innerHTML = response;
+		}
+	};
+	poststr = "";
+	["username", "email", "pass", "cpass"].forEach(function (s, i) {
+		poststr += s + "=" + document.forms["this"][s].value + "&";
+	});
+	http.send(poststr);
+}
+
+</script>
+
 <div id="container">
-	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
+	<form name="this" onsubmit="validate(); return false">
 		<div class= "block">
-			<h1 style="color: #8888ff;">Register</h1><br>
-    		<label for="login">Username</label><br>
-    		<input type="text" placeholder="Enter Username" name="login" required><br/>
-    		<label for="email">Email&nbsp;&nbsp;&nbsp;</label><br>
-    		<input type="text" placeholder="Email" name="email" required><br/>
-    		<label for="passwd">Password</label><br>
-    		<input type="password" placeholder="Enter Password" name="passwd" required><br/>
-    		<label for="cpasswd">Confirm&nbsp;&nbsp;</label><br>
-    		<input type="password" placeholder="Confirm Password" name="cpasswd" required><br/>
-    		<?php echo "<b style='color:#330000;'>".$message; ?><br>
+
+			<h1 style="color: #8888ff;">Register</h1>
+
+			<span id="message" style='color:#ff0000'></span><br>
+
+    		<label for="username"> Username </label><br>
+    		<input type="text" placeholder="..." name="username" required><br/>
+
+    		<label for="email"> Email &nbsp;&nbsp;&nbsp;</label><br>
+    		<input type="text" placeholder="..." name="email" required><br/>
+
+    		<label for="pass"> Password </label><br>
+    		<input type="password" placeholder="..." name="pass" required><br/>
+
+    		<label for="cpass"> Confirm &nbsp;&nbsp;</label><br>
+    		<input type="password" placeholder="..." name="cpass" required><br/>
+
     		<button type="submit">Register</button>
+    		
 		</div>
 	</form>
 </div>

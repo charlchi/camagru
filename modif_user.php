@@ -1,60 +1,51 @@
 
-	<?php
-	require_once('header.php');
-	function validate_form($p)
-	{
-		if ($p['login'] && $p['oldpw'] && $p['newpw'])
-			return true;
-		return false;
-	}
-	
-	function find_user($logins, $login, $oldhash)
-	{
-		foreach ($logins as $k => $v)
-			if ($v['login'] == $login && $v['passwd'] == $oldhash)
-				return $k;
-		return false;
-	}
+<?php
 
-	$message = "";
-	if ($_SERVER["REQUEST_METHOD"] == "POST")
-	{
-		$file = '../private/passwd'; 
-		$valid = validate_form($_POST);
-		$logins = false;
-		if (file_exists($file))
-			$logins = unserialize(file_get_contents($file));
+require_once('header.php');
+
+?>
+
+<script type="text/javascript">
 	
-		if ($_POST['oldpw'] == $_POST['newpw'])
-			$message = "Passwords remained the same";
-		elseif ($_POST['login'] != $_COOKIE['login'])
-			$message = "Enter your username";
-		elseif (!$valid)
-			$message = "Invalid input";
-		elseif ($valid && $logins)
-		{
-			$oldhash = hash('whirlpool', $_POST['oldpw']);
-			$user = find_user($logins, $_POST['login'], $oldhash);
-			if (!($user === false))
-			{
-				$logins[$user]['passwd'] = hash('whirlpool', $_POST['newpw']);
-				file_put_contents($file, serialize($logins));
-			}
-			else { $message = "Username not found"; }
+function validate()
+{
+	var http = new XMLHttpRequest();
+	http.open("POST", "parse_modif_user.php", true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {
+		var message = document.getElementById("message");
+		if (http.readyState == 4 && http.status == 200) {
+			var response = http.responseText;
+			if (response == "OK")
+				window.location.href = "index.php";
+			else
+				message.innerHTML = response;
 		}
-		else { $message = "Invalid input"; }
-	}
-	?>
+	};
+	poststr = "";
+	["username", "nusername"].forEach(function (s, i) {
+		poststr += s + "=" + document.forms["this"][s].value + "&";
+	});
+	http.send(poststr);
+}
+
+</script>
 <div id="container">
-	<?php echo "<b style='color:#ff1111;'>".$message; ?></b><br>
-	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
+	<form name="this" onsubmit="validate(); return false">
 		<div class= "block">
-			<h3>&nbsp;&nbsp;Change Username</h3>
-			<label for="login">Current</label><br>
-			<input type="text" placeholder="Old username" name="oldlogin" required><br>
-			<label for="newlogin">New</label><br>
-			<input type="tezt" placeholder="New username" name="newlogin" required><br>
-			<input type="submit" name="updateusername" value="Update username"><br>
+
+			<h1 style="color: #8888ff;">Change username</h1>
+
+			<span id="message" style='color:#ff0000'></span><br>
+
+			<label for="username">Username</label><br>
+			<input type="text" placeholder="Old username" name="username" required><br>
+
+			<label for="nusername">New username</label><br>
+			<input type="text" placeholder="New username" name="nusername" required><br>
+
+			<button type="submit">Submit</button>
+
 		</div>
 	</form>
 </div>

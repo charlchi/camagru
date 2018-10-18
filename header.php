@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,16 +10,16 @@
 <body>
 
 <div id='header'>
-	<a href='index.php'>Camagru</a>
 	<?php 
 	if ($_COOKIE['login'] == '')
 	{
 		echo "<a href='gallery.php'>Gallery</a>";
-		echo "<a href='register.php'>Register</a>";
 		echo "<a href='login.php'>Login</a>";
+		echo "<a href='register.php'>Register</a>";
 	}
 	else
 	{
+		echo "<a href='index.php'>Camagru</a>";
 		echo "<a href='gallery.php'>Gallery</a>";
 		echo "<a href='settings.php'>Settings</a>";
 		echo "<a href='logout.php'>Log out</a>";

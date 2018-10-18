@@ -19,7 +19,7 @@
 	$message = "";
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		$file = '../private/passwd'; 
+		$file = '../private/passwd';
 		$valid = validate_form($_POST);
 		$logins = false;
 		if (file_exists($file))
@@ -47,17 +47,15 @@
 	?>
 
 <div id="container">
-	<h2>Modify account</h2>
-	<ul>
-		<li><a href="modif_user.php" style="color: white; text-decoration: none;">
-			Change username
-		</a><br>
-		<li><a href="modif_pass.php" style="color: white; text-decoration: none;">
-			Change password</a><br>
-		<li><a href="modif_email.php" style="color: white; text-decoration: none;">
-			Change email
-		</a>
-	</ul>
+	<h3>&nbsp;&nbsp;Modify account</h3>
+	<a href="modif_user.php" style="color: white; text-decoration: none;">
+		Change username
+	</a><br>
+	<a href="modif_pass.php" style="color: white; text-decoration: none;">
+		Change password</a><br>
+	<a href="modif_email.php" style="color: white; text-decoration: none;">
+		Change email
+	</a>
 	<br>
 </div>
 </body>

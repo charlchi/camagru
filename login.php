@@ -3,41 +3,52 @@
 
 require_once('header.php');
 
-require_once('auth.php');
-$message = "";
-$usertip = "Enter Username";
-$passtip = "Enter Password";
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-	$login = $_POST['login'];
-	$passwd = $_POST['passwd'];
-	if ($login && $passwd && auth($login, $passwd))
-	{
-		echo "test";
-		setcookie('login', $login, time() + (86400 * 30), "/");
-		$db = unserialize(file_get_contents('resources/db'));
-		$db['users'][$_COOKIE['login']]['logged_in'] = 1;
-		file_put_contents('resources/db', serialize($db));
-		header('Location: index.php');
-	}
-	else if ($login && $passwd)
-	{
-		$message = "Incorrect login credentials";
-	}
-}
 ?>
 
+<script type="text/javascript">
+	
+function validate()
+{
+	var http = new XMLHttpRequest();
+	http.open("POST", "parse_login.php", true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {
+		var message = document.getElementById("message");
+		if (http.readyState == 4 && http.status == 200) {
+			var response = http.responseText;
+			if (response == "OK")
+				window.location.href = "index.php";
+			else
+				message.innerHTML = response;
+		}
+	};
+	poststr = "";
+	["username", "pass"].forEach(function (s, i) {
+		poststr += s + "=" + document.forms["this"][s].value + "&";
+	});
+	http.send(poststr);
+}
+
+</script>
+
 <div id="container">
-	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
+	<form name="this" onsubmit="validate(); return false">
 		<div class= "block">
+
 			<h1 style="color: #66ff66;">Login</h1>
-			<?php echo "<b style='color:#330000;'>".$message; ?></b><br>
-    		<label for="login">Username</label><br>
-    		<input type="text" placeholder="<?php echo $usertip; ?>" name="login" required><br>
-    		<label for="passwd">Password</label><br>
-    		<input type="password" placeholder="<?php echo $passtip; ?>" name="passwd" required><br>
-    		<a href="forgot.php" style="font-size:12px">Forgot Password?</a><br>
-			<button type="submit" name="submit" value="OK">Login</button><br>
+
+			<span id="message" style='color:#ff0000'></span><br>
+
+    		<label for="username"> Username </label><br>
+    		<input type="text" placeholder="..." name="username" required><br>
+
+    		<label for="pass"> Password </label><br>
+    		<input type="password" placeholder="..." name="pass" required><br>
+
+    		<a href="forgot.php" style="font-size:12px; color: white">Forgot Password?</a><br>
+
+			<input type="submit" value="Login">
+			
 		</div>
 	</form>
 </div>

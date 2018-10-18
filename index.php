@@ -16,7 +16,7 @@ include_once("header.php")
 			<div><canvas id="canvas"></canvas></div>
 		</div>
 		<div id="fallback" style="display: none">
-			<input type='file' onchange="readURL(this);" /><br>
+			<input type='file' onchange="readURL(this);" /><br><br>
 			<img id="uploaded" src="#" alt="your image" />
 		</div>
 	</div>

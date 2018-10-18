@@ -1,9 +1,8 @@
 <?php
 
 session_start();
-
-$_COOKIE['login'] = '';
-setcookie('login', '', time() + (86400 * 30), "/");
+session_destroy();
+setcookie("username", "", time() - 3600);
 header('Location: login.php');
 
 ?>
