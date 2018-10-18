@@ -14,21 +14,20 @@ include_once("header.php")
 			<div><input class='headeritem' id="snap" type="button" value="Smile!" onclick="picture()" /></div>
 			<div id="picture"></div>
 			<div><canvas id="canvas"></canvas></div>
-			<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput">
+		</div>
+		<div id="fallback" style="display: none">
+			<input type='file' onchange="readURL(this);" /><br>
+			<img id="uploaded" src="#" alt="your image" />
 		</div>
 	</div>
 	
 <script type="text/javascript">
-	
-"use strict";
 
 var devices = navigator.mediaDevices;
 var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var snap = document.getElementById('snap');
 var videoStream = null;
-
-
 
 function start()
 {
@@ -52,7 +51,7 @@ function start()
 		canvas.style.display = 'block';
 	})
 	.catch(function(){
-		cameraInput.style.display = 'block';
+		document.getElementById("fallback").style.display = 'block';
 		alert("Your browser is unsupported, or you don't have a webcam.")
 	});
 }
@@ -69,16 +68,20 @@ function picture()
 
 start();
 
-$('#cameraInput').on('change', function(e){
-	$data = e.originalEvent.target.files[0];
-	$reader = new FileReader();
-	reader.onload = function(evt){
-		$('#canvas').attr('src',evt.target.result);
-		reader.readAsDataUrl($data);
-		canvas.getContext('2d').drawImage($data, 0, 0);
-		canvas.style.display = 'block';
+function readURL(input)
+{
+	if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function (e)
+	    {
+	        upimg = document.getElementById('uploaded');
+	        document.getElementById('fallback').style.display = 'block';
+	        upimg.style.width = '40vw';
+	        upimg.src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
 	}
-});
+}
 
 </script>
 

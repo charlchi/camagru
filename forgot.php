@@ -5,8 +5,6 @@ require_once('header.php');
 
 require_once('auth.php');
 $message = "";
-$usertip = "Enter Username";
-$passtip = "Enter Password";
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$login = $_POST['login'];
@@ -30,14 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 <div id="container">
 	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
 		<div class= "block">
-			<h1 style="color: #66ff66;">Login</h1>
+			<h1 style="color: #66ffff;">Reset password</h1>
 			<?php echo "<b style='color:#330000;'>".$message; ?></b><br>
-    		<label for="login">Username</label><br>
-    		<input type="text" placeholder="<?php echo $usertip; ?>" name="login" required><br>
-    		<label for="passwd">Password</label><br>
-    		<input type="password" placeholder="<?php echo $passtip; ?>" name="passwd" required><br>
-    		<a href="forgot.php" style="font-size:12px">Forgot Password?</a><br>
-			<button type="submit" name="submit" value="OK">Login</button><br>
+    		<label for="login">Email</label><br>
+    		<input type="text" placeholder="Email" name="login" required><br><br>
+			<button type="submit" name="submit" value="OK">Reset</button><br>
+			<br>
+			We'll send you an email with your new password.
 		</div>
 	</form>
 </div>

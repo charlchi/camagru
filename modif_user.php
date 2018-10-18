@@ -45,20 +45,18 @@
 		else { $message = "Invalid input"; }
 	}
 	?>
-
 <div id="container">
-	<h2>Modify account</h2>
-	<ul>
-		<li><a href="modif_user.php" style="color: white; text-decoration: none;">
-			Change username
-		</a><br>
-		<li><a href="modif_pass.php" style="color: white; text-decoration: none;">
-			Change password</a><br>
-		<li><a href="modif_email.php" style="color: white; text-decoration: none;">
-			Change email
-		</a>
-	</ul>
-	<br>
+	<?php echo "<b style='color:#ff1111;'>".$message; ?></b><br>
+	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
+		<div class= "block">
+			<h3>&nbsp;&nbsp;Change Username</h3>
+			<label for="login">Current</label><br>
+			<input type="text" placeholder="Old username" name="oldlogin" required><br>
+			<label for="newlogin">New</label><br>
+			<input type="tezt" placeholder="New username" name="newlogin" required><br>
+			<input type="submit" name="updateusername" value="Update username"><br>
+		</div>
+	</form>
 </div>
 </body>
 </html>

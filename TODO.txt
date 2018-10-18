@@ -10,23 +10,28 @@ by email. This preference must be set as true by default but can be deactivated 
 user’s preferences.
 
 init database
+	Create TABLE users (
+		ID int NOT NULL AUTO_INCREMENT UNIQUE,
+		username varchar(255) UNIQUE,
+		email varchar(255) UNIQUE,
+		pass varchar(1000),
+		PRIMARY KEY(ID)
+	);
+	Create TABLE posts (
+		ID int NOT NULL AUTO_INCREMENT UNIQUE,
+		user_id int,
+		path varchar(100),
+		date int
+	);
+	Create TABLE reactions (
+		ID int NOT NULL AUTO_INCREMENT UNIQUE,
+		user_id int,
+		post_id int,
+		type int,
+		data varchar(255),
+		date int
+	);
 
-user:
-	id
-	name
-	email
-	password
-
-post:
-	id
-	user_id
-
-reaction:
-	id
-	type
-	post_id
-	user_id
-	data
 
 
 add 

@@ -24,8 +24,8 @@
 	else
 	{
 		echo "<a href='gallery.php'>Gallery</a>";
-		echo "<a href='logout.php'>Log out</a>"; 
 		echo "<a href='settings.php'>Settings</a>";
+		echo "<a href='logout.php'>Log out</a>";
 	}
 	?>
 </div>
