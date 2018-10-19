@@ -48,15 +48,16 @@
 
 <div id="container">
 	<h3>&nbsp;&nbsp;Modify account</h3>
-	<a href="modif_user.php" style="color: white; text-decoration: none;">
-		Change username
-	</a><br>
-	<a href="modif_pass.php" style="color: white; text-decoration: none;">
+	<a href="modif_user.php" style="color: black;">
+		Change username</a><br>
+	<a href="modif_pass.php" style="color: black;">
 		Change password</a><br>
-	<a href="modif_email.php" style="color: white; text-decoration: none;">
-		Change email
-	</a>
-	<br>
+	<a href="modif_email.php" style="color: black;">
+		Change email</a><br>
 </div>
-</body>
-</html>
+
+<?php
+
+require_once('footer.php');
+
+?>

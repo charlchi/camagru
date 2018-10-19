@@ -8,13 +8,16 @@ require_once('header.php');
 
 <?php
 
-$login = $_COOKIE['login'];
+$login = $_COOKIE['username'];
 
-echo "hi you are $login retarded";
+echo "hi you are [$login]";
 
 ?>
 
 </div>
 
-</body>
-</html>
+<?php
+
+require_once('footer.php');
+
+?>

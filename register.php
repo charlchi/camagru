@@ -17,7 +17,7 @@ function validate()
 		if (http.readyState == 4 && http.status == 200) {
 			var response = http.responseText;
 			if (response == "OK")
-				window.location.href = "index.php";
+				window.location.href = "login.php";
 			else
 				message.innerHTML = response;
 		}
@@ -32,10 +32,10 @@ function validate()
 </script>
 
 <div id="container">
-	<form name="this" onsubmit="validate(); return false">
+	<form name="this" onsubmit="validate(); return false" autocomplete="off">
 		<div class= "block">
 
-			<h1 style="color: #8888ff;">Register</h1>
+			<h1>Register</h1>
 
 			<span id="message" style='color:#ff0000'></span><br>
 
@@ -56,5 +56,8 @@ function validate()
 		</div>
 	</form>
 </div>
-</body>
-</html>
+<?php
+
+require_once('footer.php');
+
+?>

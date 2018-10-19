@@ -32,10 +32,10 @@ function validate()
 </script>
 
 <div id="container">
-	<form name="this" onsubmit="validate(); return false">
+	<form name="this" onsubmit="validate(); return false" autocomplete="off">
 		<div class= "block">
 
-			<h1 style="color: #8888ff;">Change email</h1>
+			<h1 style="color: #8888ff;">Change password</h1>
 
 			<span id="message" style='color:#ff0000'></span><br>
 
@@ -50,5 +50,9 @@ function validate()
 		</div>
 	</form>
 </div>
-</body>
-</html>
+
+<?php
+
+require_once('footer.php');
+
+?>

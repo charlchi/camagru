@@ -12,17 +12,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$db = db_open();
 	try {
 		foreach ($db->query("SELECT * FROM users") as $row) {
-			if ($row['username'] == $post['username']) {
+			if ($row['username'] == $post['username'] && $row['confirmed'] == 1) {
 				if ($row['pass'] == hash("whirlpool", $post['pass'])) {
-					setcookie("username", $post['username'], time() + 3600);
-					echo "OK";
+					$_SESSION['username'] = $post['username'];
+					setcookie("username", $post['username'], time()+3600);
+					die("OK");
 				}
 			}
-		}	
+		}
+		echo "KO";
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";
-	}
-	
+	}	
 }
 
 ?>

@@ -10,13 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		die($post);
 
 	$db = db_open();
+	$users = $db->query("SELECT * FROM users");
+
 	try {
-		foreach ($db->query("SELECT * FROM users") as $row) {
-			if ($row['username'] == $post['username']) {
-				if ($row['pass'] == hash("whirlpool", $post['pass'])) {
-					setcookie("username", $post['username'], time() + 3600);
-					echo "OK";
-				}
+		foreach ($users as $row) {
+			
+		}
+		foreach ($users as $row) {
+			if (hash("whirlpool", $row['username']) == $token) {
+				$stm = $db->prepare("UPDATE users SET confirmed = 1 ".
+					"WHERE username = ?");
+				$stm->execute(array($row['username']));
 			}
 		}	
 	} catch (Exception $e) {

@@ -11,7 +11,7 @@
 
 <div id='header'>
 	<?php 
-	if ($_COOKIE['login'] == '')
+	if ($_COOKIE['username'] == '')
 	{
 		echo "<a href='gallery.php'>Gallery</a>";
 		echo "<a href='login.php'>Login</a>";

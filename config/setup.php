@@ -6,7 +6,7 @@ session_destroy();
 include_once("database.php");
 
 try {
-	$db = new PDO("$db_dsn", $db_user, $db_pass, array(PDO::MYSQL_ATTR_LOCAL_INFILE => true));
+	$db = new PDO("mysql:host=localhost", $db_user, $db_pass, array(PDO::MYSQL_ATTR_LOCAL_INFILE => true));
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$exists = (bool) $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA ".
 		"WHERE SCHEMA_NAME = \"$db_name\"");
@@ -17,7 +17,7 @@ try {
 	$db->query("Create TABLE users (".
 		"ID int NOT NULL AUTO_INCREMENT UNIQUE,".
 		"username varchar(35) UNIQUE, email varchar(255) UNIQUE,".
-		"pass varchar(1000), PRIMARY KEY(ID)".
+		"pass varchar(1000), confirmed int, sendmail int, PRIMARY KEY(ID)".
 	")");
 	$db->query("Create TABLE posts (".
 		"ID int NOT NULL AUTO_INCREMENT UNIQUE,".
@@ -31,7 +31,7 @@ try {
 	")");
 	$db->query("LOAD DATA LOCAL INFILE 'users.csv' INTO TABLE users ".
 		"FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' ".
-		"IGNORE 1 LINES (ID, username, email, pass)"
+		"IGNORE 1 LINES (ID, username, email, pass, confirmed, sendmail)"
 	);
 	$db->query("LOAD DATA LOCAL INFILE 'posts.csv' INTO TABLE posts ".
 		"FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' ".
