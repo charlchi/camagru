@@ -1,59 +1,33 @@
 
-	<?php
-	require_once('header.php');
-	function validate_form($p)
-	{
-		if ($p['login'] && $p['oldpw'] && $p['newpw'])
-			return true;
-		return false;
-	}
-	
-	function find_user($logins, $login, $oldhash)
-	{
-		foreach ($logins as $k => $v)
-			if ($v['login'] == $login && $v['passwd'] == $oldhash)
-				return $k;
-		return false;
-	}
+<?php
+require_once('header.php');
+?>
 
-	$message = "";
-	if ($_SERVER["REQUEST_METHOD"] == "POST")
-	{
-		$file = '../private/passwd';
-		$valid = validate_form($_POST);
-		$logins = false;
-		if (file_exists($file))
-			$logins = unserialize(file_get_contents($file));
-	
-		if ($_POST['oldpw'] == $_POST['newpw'])
-			$message = "Passwords remained the same";
-		elseif ($_POST['login'] != $_COOKIE['login'])
-			$message = "Enter your username";
-		elseif (!$valid)
-			$message = "Invalid input";
-		elseif ($valid && $logins)
-		{
-			$oldhash = hash('whirlpool', $_POST['oldpw']);
-			$user = find_user($logins, $_POST['login'], $oldhash);
-			if (!($user === false))
-			{
-				$logins[$user]['passwd'] = hash('whirlpool', $_POST['newpw']);
-				file_put_contents($file, serialize($logins));
-			}
-			else { $message = "Username not found"; }
+<script type="text/javascript">
+
+function loadDoc(file) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("setting").innerHTML = this.responseText;
+			var js = document.createElement('script');
+			js.type = 'text/javascript';
+			js.src = file+'.js';
+			document.body.appendChild(js);
 		}
-		else { $message = "Invalid input"; }
-	}
-	?>
+	};
+	xhttp.open("GET", file+".php", true);
+	xhttp.send();
+}
+
+</script>
 
 <div id="container">
-	<h3>&nbsp;&nbsp;Modify account</h3>
-	<a href="modif_user.php" style="color: black;">
-		Change username</a><br>
-	<a href="modif_pass.php" style="color: black;">
-		Change password</a><br>
-	<a href="modif_email.php" style="color: black;">
-		Change email</a><br>
+	<button type="button" onclick="loadDoc('settings/modif_settings')"> General settings </button><br>
+	<button type="button" onclick="loadDoc('settings/modif_user')"> Username </button><br>
+	<button type="button" onclick="loadDoc('settings/modif_pass')"> Password </button><br>
+	<button type="button" onclick="loadDoc('settings/modif_email')"> Email </button><br>
+	<br><div id="setting"></div>
 </div>
 
 <?php

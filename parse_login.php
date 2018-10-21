@@ -11,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 	$db = db_open();
 	try {
-		foreach ($db->query("SELECT * FROM users") as $row) {
+		$users = $db->query("SELECT * FROM users");
+		foreach ($users as $row) {
 			if ($row['username'] == $post['username'] && $row['confirmed'] == 1) {
 				if ($row['pass'] == hash("whirlpool", $post['pass'])) {
 					$_SESSION['username'] = $post['username'];

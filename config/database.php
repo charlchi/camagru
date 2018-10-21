@@ -3,7 +3,7 @@
 $db_name = "camagru";
 $db_dsn = "mysql:host=localhost";
 $db_user = "root";
-$db_pass = "rootroot";
+$db_pass = "root";
 
 function db_open()
 {
@@ -13,7 +13,6 @@ function db_open()
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $db;
 	} catch (PDOException $e) {
-		// TODO handle ERROR
 		die("Error!: " . $e->getMessage() . "<br/>");
 	}
 }

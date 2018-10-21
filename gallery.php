@@ -10,7 +10,7 @@ require_once('header.php');
 
 $login = $_COOKIE['username'];
 
-echo "hi you are [$login]";
+echo "Hi $login!";
 
 ?>
 

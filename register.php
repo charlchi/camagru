@@ -48,7 +48,7 @@ function validate()
     		<label for="pass"> Password </label><br>
     		<input type="password" placeholder="..." name="pass" required><br/>
 
-    		<label for="cpass"> Confirm &nbsp;&nbsp;</label><br>
+    		<label for="cpass"> Confirm password </label><br>
     		<input type="password" placeholder="..." name="cpass" required><br/>
 
     		<button type="submit">Register</button>

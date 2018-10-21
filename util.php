@@ -28,7 +28,7 @@ function validate_post($post) {
 		$ret['email'] = $email;
 	}
 	if (isset($post['nemail'])) {
-		$email = strip_str($post['nemail']);
+		$nemail = strip_str($post['nemail']);
 		if (!filter_var($nemail, FILTER_VALIDATE_EMAIL))
 			return "Invalid email format";
 		$ret['nemail'] = $nemail;

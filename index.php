@@ -1,26 +1,26 @@
 <?php
+
 session_start();
+
+include_once("header.php");
+
 ?>
-
-<?php
-include_once("header.php")
-?>
-
-	<div id="container">
-
-		<div><video id="video" autoplay="autoplay"></video></div>
-		
-		<div id="export_container">
-			<div><input class='headeritem' id="snap" type="button" value="Smile!" onclick="picture()" /></div>
-			<div id="picture"></div>
-			<div><canvas id="canvas"></canvas></div>
-		</div>
-		<div id="fallback" style="display: none">
-			<input type='file' onchange="readURL(this);" /><br><br>
-			<img id="uploaded" src="#" alt="your image" />
-		</div>
+<div id="container">
+	<div><input id="snap" type="button" value="Smile!" onclick="picture()" /></div>
+	<div>
+		<video id="video" autoplay="autoplay" style=" width: 35vw;"></video>
+	</div>
+	<div id="export_container" style="position: absolute;">
+		<img src="https://placehold.it/100" style="position: absolute;">
+		<canvas id="canvas" style=" width: 35vw;"></canvas>
 	</div>
 	
+	<div id="fallback" style="display: none">
+		<input type='file' onchange="readURL(this);" /><br><br>
+		<img id="uploaded" src="#" alt="your image" />
+	</div>
+</div>
+
 <script type="text/javascript">
 
 var devices = navigator.mediaDevices;

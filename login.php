@@ -17,7 +17,7 @@ function validate()
 		if (http.readyState == 4 && http.status == 200) {
 			var response = http.responseText;
 			if (response == "OK")
-				window.location.href = "index.php";
+				window.location.href = "gallery.php";
 			else
 				message.innerHTML = response;
 		}
