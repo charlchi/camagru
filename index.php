@@ -1,89 +1,57 @@
 <?php
 
+// TODO:
+// COPYSAMPLED
+// .htaccess
+
 session_start();
 
 include_once("header.php");
 
 ?>
+
 <div id="container">
-	<div><input id="snap" type="button" value="Smile!" onclick="picture()" /></div>
+
+	<div id="switchers">
+		<p>Upload an image :</p><input type="file" value="Upload an image" onchange="upload_picture(this); return false;" style="display:inline-block;" />
+		<br>
+		<p>Or take a picture :</p>
+	</div>
+
+	<!-- main webcam input -->
 	<div>
-		<video id="video" autoplay="autoplay" style=" width: 35vw;"></video>
+		<div id="export_container" style="position: absolute;">
+			<img id="img_overlay" src="#" style="display: none; position: absolute; text-align: none;">
+			<canvas id="canvas" style=""></canvas>
+		</div>
+		<video id="video" autoplay="autoplay" style=""></video>
 	</div>
-	<div id="export_container" style="position: absolute;">
-		<img src="https://placehold.it/100" style="position: absolute;">
-		<canvas id="canvas" style=" width: 35vw;"></canvas>
+
+	<br>
+
+	<div>
+		Select Overlay: 
+		<input id="overlay" type="text" list="overlay_list" onchange="update_overlay();" onmousedown="value = '';">
+		<datalist id="overlay_list">
+			<?php
+			$files = array_diff(scandir("overlays"), array(".", ".."));
+			echo "<option value='' selected disabled hidden>";
+			foreach ($files as $image) {
+				$name = (explode('.', $image))[0];
+				echo "<option value='$name'>";
+			}
+			?>
+		</datalist>
+
 	</div>
-	
-	<div id="fallback" style="display: none">
-		<input type='file' onchange="readURL(this);" /><br><br>
-		<img id="uploaded" src="#" alt="your image" />
-	</div>
+	<div id="snap"><input type="button" value="Smile!" onclick="snap_picture(); return false;" /></div>
+	<br>
+	<!-- result output -->
+
 </div>
 
-<script type="text/javascript">
 
-var devices = navigator.mediaDevices;
-var video = document.getElementById('video');
-var canvas = document.getElementById('canvas');
-var snap = document.getElementById('snap');
-var videoStream = null;
-
-function start()
-{
-	var constraints = {video: { facingMode: "user" }, audio: false};
-	devices.getUserMedia(constraints)
-	.then(function(stream) {
-		videoStream = stream;
-		var source;
-		//Get the stream. This goes to the video tag
-		if (window.URL) {
-			source = window.URL.createObjectURL(stream);
-		} else if (window.webkitURL) {
-			source = window.webkitURL.createObjectURL(stream);
-		} else {
-			source = stream; // Opera and Firefox
-		}
-		video.autoplay = true;
-		video.src = source;
-		video.style.display = 'block';
-		snap.style.display = 'block';
-		canvas.style.display = 'block';
-	})
-	.catch(function(){
-		document.getElementById("fallback").style.display = 'block';
-		alert("Your browser is unsupported, or you don't have a webcam.")
-	});
-}
-
-function picture()
-{
-	setTimeout(function(){
-		canvas.style.display = 'block';
-		canvas.width = video.videoWidth;
-		canvas.height = video.videoHeight;
-		canvas.getContext('2d').drawImage(video, 0, 0);
-	}, 200);
-}
-
-start();
-
-function readURL(input)
-{
-	if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-	    reader.onload = function (e)
-	    {
-	        upimg = document.getElementById('uploaded');
-	        document.getElementById('fallback').style.display = 'block';
-	        upimg.style.width = '40vw';
-	        upimg.src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	}
-}
-
-</script>
+<script type="text/javascript" src="camagru.js"></script>
 
 <?php
 
