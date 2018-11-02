@@ -12,14 +12,13 @@ function validate()
 	var http = new XMLHttpRequest();
 	http.open("POST", "parse_login.php", true);
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.onreadystatechange = function() {
+	http.onreadystatechange = () => {
 		var message = document.getElementById("message");
 		if (http.readyState == 4 && http.status == 200) {
-			var response = http.responseText;
-			if (response == "OK")
+			if (http.responseText == "OK")
 				window.location.href = "gallery.php";
 			else
-				message.innerHTML = response;
+				message.innerHTML = http.responseText;
 		}
 	};
 	poststr = "";
@@ -35,18 +34,17 @@ function validate()
 	<form name="this" onsubmit="validate(); return false" autocomplete="off">
 		<div class= "block">
 
-			<h1>Login</h1>
+			<h2>Login</h2>
 
-			<span id="message" style='color:#ff0000'></span><br>
+			<p id="message" style='color:#ff0000'></p>
 
-    		<label for="username"> Username </label><br>
+    		<label for="username"> Username </label>
     		<input type="text" placeholder="..." name="username" required><br>
 
-    		<label for="pass"> Password </label><br>
+    		<label for="pass"> Password </label>
     		<input type="password" placeholder="..." name="pass" required><br>
 
-    		<a href="forgot.php" style="font-size:12px; color:black;">Forgot Password?</a><br>
-
+    		<p><a href="forgot.php" style="font-size:12px; color:black;">Forgot Password?</a></p>
 			<input type="submit" value="Login">
 			
 		</div>

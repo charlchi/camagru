@@ -35,22 +35,23 @@ function validate()
 	<form name="this" onsubmit="validate(); return false" autocomplete="off">
 		<div class= "block">
 
-			<h1>Register</h1>
+			<h2>Register</h2>
+			<h4>Fill in your details and we'll send you a confirmation email.</h4>
 
-			<span id="message" style='color:#ff0000'></span><br>
+			<p id="message" style='color:#ff0000'></p>
 
-    		<label for="username"> Username </label><br>
+    		<label for="username"> Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
     		<input type="text" placeholder="..." name="username" required><br/>
 
-    		<label for="email"> Email &nbsp;&nbsp;&nbsp;</label><br>
+    		<label for="email"> Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
     		<input type="text" placeholder="..." name="email" required><br/>
 
-    		<label for="pass"> Password </label><br>
+    		<label for="pass"> Password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
     		<input type="password" placeholder="..." name="pass" required><br/>
 
-    		<label for="cpass"> Confirm password </label><br>
+    		<label for="cpass">Confirm password </label>
     		<input type="password" placeholder="..." name="cpass" required><br/>
-
+    		<p></p>
     		<button type="submit">Register</button>
     		
 		</div>

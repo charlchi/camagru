@@ -3,7 +3,7 @@
 $db_name = "camagru";
 $db_dsn = "mysql:host=localhost";
 $db_user = "root";
-$db_pass = "rootroot";
+$db_pass = "root";
 
 function db_open()
 {

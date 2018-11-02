@@ -2,8 +2,10 @@
 <html>
 <head>
 	<title>Camagru</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono:500|Share+Tech+Mono" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
@@ -12,21 +14,19 @@
 <body>
 
 <div id='header'>
-	<?php 
+	<?php
 	if ($_COOKIE['username'] == '')
 	{
-		echo "<a href='gallery.php'>Gallery</a>";
-		echo "<a href='login.php'>Login</a>";
-		echo "<a href='register.php'>Register</a>";
+		echo "<a class='headeritem' href='gallery.php?p=0'  >Gallery</a>";
+		echo "<a class='headeritem' href='login.php'      >Login</a>";
+		echo "<a class='headeritem' href='register.php'>Register</a>";
 	}
 	else
 	{
-		echo "<a href='index.php'>Camagru</a>";
-		echo "<a href='gallery.php'>Gallery</a>";
-		echo "<a href='settings.php'>Settings</a>";
-		echo "<a href='logout.php'>Logout</a>";
+		echo "<a class='headeritem' href='camagru.php'    >Post</a>";
+		echo "<a class='headeritem' href='gallery.php?p=0'  >Gallery</a>";
+		echo "<a class='headeritem' href='settings.php'>Settings</a>";
+		echo "<a class='headeritem' href='logout.php'    >Logout</a>";
 	}
-	echo "<br style='clear: both;' />";
 	?>
 </div>
-<br>

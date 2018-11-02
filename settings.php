@@ -10,10 +10,6 @@ function loadDoc(file) {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			document.getElementById("setting").innerHTML = this.responseText;
-			var js = document.createElement('script');
-			js.type = 'text/javascript';
-			js.src = file+'.js';
-			document.body.appendChild(js);
 		}
 	};
 	xhttp.open("GET", file+".php", true);
@@ -23,12 +19,16 @@ function loadDoc(file) {
 </script>
 
 <div id="container">
-	<button type="button" onclick="loadDoc('settings/modif_settings')"> General settings </button><br>
-	<button type="button" onclick="loadDoc('settings/modif_user')"> Username </button><br>
-	<button type="button" onclick="loadDoc('settings/modif_pass')"> Password </button><br>
-	<button type="button" onclick="loadDoc('settings/modif_email')"> Email </button><br>
-	<br><div id="setting"></div>
+	<button type="button" onclick="loadDoc('settings/modif_settings')"> General settings </button>
+	<button type="button" onclick="loadDoc('settings/modif_user')"> Username </button>
+	<button type="button" onclick="loadDoc('settings/modif_pass')"> Password </button>
+	<button type="button" onclick="loadDoc('settings/modif_email')"> Email </button>
+	<br><br><div id="setting"></div>
 </div>
+
+<script type="text/javascript" src="settings/modif_user.js"></script>
+<script type="text/javascript" src="settings/modif_pass.js"></script>
+<script type="text/javascript" src="settings/modif_email.js"></script>
 
 <?php
 

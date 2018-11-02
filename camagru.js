@@ -1,14 +1,16 @@
 
-var devices = navigator.mediaDevices;
+var video_div = document.getElementById('video_div');
+var canvas_div = document.getElementById('canvas_div');
+var img_div = document.getElementById('img_div')
 var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var snap = document.getElementById('snap');
-var videoStream = null;
-var curr_overlay = null;
+var overlay;
+let streamvar;
 
 function update_overlay()
 {
-	var overlay = document.getElementById("img_overlay");
+	overlay = document.getElementById("img_overlay");
 	overlay.src = "overlays/" + document.getElementById("overlay").value + ".png";
 	overlay.style.display = "block";
 	overlay.width = 200;
@@ -19,13 +21,13 @@ function update_overlay()
 
 function showMain()
 {
-	video.style.display = 'block';
+	video_div.style.display = 'block';
 }
 function hideMain()
 {
-	video.style.display = 'none';
-	snap.style.display = 'none';
-	canvas.style.display = 'none';
+	video_div.style.display = 'none';
+	snap_div.style.display = 'none';
+	canvas_div.style.display = 'none';
 }
 
 function handleDevices(devices)
@@ -35,49 +37,65 @@ function handleDevices(devices)
 	}
 }
 
+function startStream(stream)
+{
+	video.srcObject = stream;
+	window.stream = stream;
+}
+
+function stopStream()
+{
+	video_div.style.display = 'none';
+	stream.getTracks()[0].stop();
+}
+
 function start()
 {
-	navigator.mediaDevices.enumerateDevices().then(handleDevices);
-	var constraints = {video: { facingMode: "user" }, audio: false};
+	streamvar = window.stream;
+	var constraints = {video: {width: 320, height: 240}, audio: false};
 	navigator.mediaDevices.getUserMedia(constraints)
 	.then(function(stream) {
-		var videotracks = stream.getVideoTracks();
-		video.autoplay = true;
-		video.srcObject = stream;
-		window.stream = stream;
+		startStream(stream);
 		showMain();
 	})
 	.catch(function(error) {
 		alert('getUserMedia error: ' + error.name, error);
 		hideMain();
-		alert("Your browser is unsupported, or you don't have a webcam.");
 	});
 }
 
 function snap_picture()
 {
-	setTimeout(function(){
-		canvas.style.display = 'block';
+	setTimeout(() => {
+		canvas_div.style.display = 'block';
 		canvas.width = video.videoWidth;
 		canvas.height = video.videoHeight;
 		canvas.getContext('2d').drawImage(video, 0, 0);
+		stopStream();
 	}, 200);
 	return false;
 }
 
-start();
+var upload_pic = document.getElementById("upload");
+upload_pic.addEventListener("change", upload_picture, false);
+function upload_picture() {
 
-function upload_picture(input)
-{
-	video.style.display = 'none';
-	input.addEventListener('change', function (e) {
-		var img = new Image;
-		img.onload = function () {
-			canvas.style.display = 'block';
-			canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
-			canvas.getContext('2d').drawImage(img, 0, 0);
-		};
-		img.src = URL.createObjectURL(e.target.files[0]);
-	});
+	stopStream();
+	var reader  = new FileReader();
+	reader.onload() = function () {
+
+		img.src = reader.result;
+		canvas_div.style.display = 'block';
+		canvas.width = img.width;
+		canvas.height = img.height;
+		console.log(img.width, img.height);
+		canvas.getContext('2d').drawImage(img, 0, 0);
+		update_overlay();
+		canvas.getContext('2d').drawImage(overlay, 0, 0);
+	
+	};
+
+	reader.readAsDataURL(this.files[0]);
 }
+
+start();
