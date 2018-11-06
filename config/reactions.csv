@@ -1,2 +1,7 @@
 ID,user_id,post_id,type,data,date
 1,1,1,0,hello,600
+2,1,1,0,nice pic!,600
+3,1,1,1,null,600
+4,1,1,1,null,600
+5,1,1,1,null,600
+6,1,1,1,null,600

@@ -27,21 +27,20 @@ body {
 
 /* _________________________________CAMAGRU */
 #sidebar {
+	border: 1px solid #ddd;
+	text-align: left;
+	display: inline-block;
 	font-size: 0.8em;
-	text-align: center;
-	width: 20%;
-	float:left;
-	margin-left:20px;
-	padding: 20px 0px;
+	margin: 10px;
+	padding: 10px;
 	border-radius:3px;
-	background-color: #e1e1e1;
 	padding : 10px;
 }
 #canvas_div {
+	float: left;
 	position: relative;
 	margin: auto;
 	background-color: white;
-	width: 70%;
 	position: relative;
 }
 #snap {
@@ -56,6 +55,12 @@ body {
 	height:1%;
 	text-align: center;
 	padding: 5px;
+	margin: auto;
+}
+#containermain {
+	overflow:hidden;
+	height:1%;
+	padding: 15px;
 	margin: auto;
 }
 input {
@@ -78,7 +83,7 @@ h1 {
 	color: #000;
 	margin: 0 auto;
 	display: inline-block;
-	max-width: 30%;
+	max-width: 40%;
 	padding: 10px;
 	padding-left: 10px;
 	padding-right: 10px;

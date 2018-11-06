@@ -10,7 +10,7 @@ include_once("header.php");
 
 ?>
 
-<div id="container">
+<div id="containermain">
 
 	<div id="sidebar">
 		Select an overlay:<br>
@@ -27,7 +27,6 @@ include_once("header.php");
 		<input id="snapd" type="button" value="Discard" onclick="discard_picture(); return false;" />
 		<p></p>
 		<input id="snapp" type="button" value="Post" onclick="post_picture(); return false;" />
-		<p>- You can move the overlay by clicking on the canvas, even after you took a photo</p>
 	</div>
 
 	<div id="canvas_div" onclick="update_overlay">
@@ -44,6 +43,7 @@ include_once("header.php");
 
 <p>&nbsp;Your previous posts:</p>
 
+<div style="display:inline-block; margin:15px; overflow-x: scroll; white-space: nowrap; border: 1px solid #ddd">
 <?php
 
 include_once("config/database.php");
@@ -51,17 +51,31 @@ include_once("config/database.php");
 $db = db_open();
 
 try {
-	$posts = $db->query("SELECT * FROM posts ORDER BY date DESC");
+	$posts = $db->query("SELECT * FROM posts ORDER BY ID");
 	$logged = $_COOKIE['username'];
-	$sth = $db->prepare("SELECT username FROM users WHERE username = '$logged'");
+	$sth = $db->prepare("SELECT ID FROM users WHERE username = '$logged'");
 	$sth->execute();
 	$id = $sth->fetchColumn();
-	echo "hi";
+	$i = 0;
+	foreach ($posts as $post) {
+		if ($post['user_id'] == $id) {
+			$pid = $post['ID'];
+			echo "<a href='post.php?p=$pid'><div id='post$pid' class='post'>";
+			echo "<img style='width: 100px;' src='";
+			echo $post['path'];
+			echo "' />";
+			echo "</div></a>";
+			$i++;
+		}
+		if ($i > 0 && $i % 5 == 0)
+			echo "<br>";
+	}
 } catch (Exception $e) {
 	echo "Error!: " . $e->getMessage() . "<br/>";
 }
-?>
 
+?>
+</div>
 
 <script id="helper_script" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="camagru.js"></script>

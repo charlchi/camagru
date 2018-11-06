@@ -8,6 +8,7 @@ var overlay = document.getElementById('overlay');
 var snap = document.getElementById('snap');
 var snapd = document.getElementById('snapd');
 var snapp = document.getElementById('snapp');
+var snapped = 0;
 var opath;
 
 function update_overlay(name)
