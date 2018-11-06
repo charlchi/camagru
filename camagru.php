@@ -45,14 +45,18 @@ include_once("header.php");
 <p>&nbsp;Your previous posts:</p>
 
 <?php
+
+include_once("config/database.php");
+
 $db = db_open();
 
 try {
 	$posts = $db->query("SELECT * FROM posts ORDER BY date DESC");
 	$logged = $_COOKIE['username'];
-	$sth = $db->prepare("SELECT username FROM users WHERE username = $logged");
+	$sth = $db->prepare("SELECT username FROM users WHERE username = '$logged'");
 	$sth->execute();
 	$id = $sth->fetchColumn();
+	echo "hi";
 } catch (Exception $e) {
 	echo "Error!: " . $e->getMessage() . "<br/>";
 }
