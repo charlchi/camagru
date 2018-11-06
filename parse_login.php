@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			if ($row['username'] == $post['username'] && $row['confirmed'] == 1) {
 				if ($row['pass'] == hash("whirlpool", $post['pass'])) {
 					$_SESSION['username'] = $post['username'];
-					setcookie("username", $post['username'], time()+3600);
+					setcookie("username", $post['username'], time()+360000, "/");
 					die("OK");
 				}
 			}

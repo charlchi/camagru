@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-	<link rel="stylesheet" href="style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="style.css?<?php echo date('l jS \of F Y h:i:s A'); ?>" type="text/css" media="all">
 </head>
 <body>
 
@@ -30,3 +30,4 @@
 	}
 	?>
 </div>
+<br>
