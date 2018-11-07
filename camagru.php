@@ -13,7 +13,7 @@ include_once("header.php");
 <div id="containermain">
 
 	<div id="sidebar">
-		Select an overlay:<br>
+		<h3>Select an overlay:</h3>
 		<?php
 		$files = array_diff(scandir("overlays"), array(".", ".."));
 		foreach ($files as $image) {

@@ -9,10 +9,12 @@ var snap = document.getElementById('snap');
 var snapd = document.getElementById('snapd');
 var snapp = document.getElementById('snapp');
 var snapped = 0;
+var s = 0;
 var opath;
 
 function update_overlay(name)
 {
+	s = 0;
 	snap.style.display = 'block';
 	opath = "overlays/" + name + ".png";
 	var img = new Image;
@@ -24,8 +26,10 @@ function update_overlay(name)
 	img.src = opath;
 }
 
+canvas_div.addEventListener("wheel", scale_overlay);
 canvas_div.addEventListener('click', position_overlay, true);
 canvas_div.addEventListener('drag', position_overlay, true);
+
 function position_overlay(e)
 {
 	var img = new Image;
@@ -35,9 +39,27 @@ function position_overlay(e)
 		var y = e.clientY - rect.top;
 		canvas_div.style.display = 'block';
 		overlay.getContext('2d').clearRect(0, 0, overlay.width, overlay.height);
-		overlay.getContext('2d').drawImage(img, x-img.width/2, y-img.height/2, img.width, img.height);
+		overlay.getContext('2d').drawImage(img, 
+			((x)-(img.width+s)/2), ((y)-(img.height+s)/2),
+			img.width + s, img.height + s
+		);
 	}
 	img.src = opath;	
+}
+s = 0;
+function scale_overlay(e)
+{
+	var img = new Image;
+	img.onload = function() {
+		console.log(s, this.width);
+		s += e.deltaY > 0 ? 10: -10;
+		if (s + img.width < 10 || s + img.height < 10)
+			s = 0;
+		position_overlay(e);
+	}
+	img.src = opath;
+	e.preventDefault();
+	e.stopPropagation();
 }
 
 function handleDevices(devices)
