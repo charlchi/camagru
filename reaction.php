@@ -24,11 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			$sth = $db->prepare("SELECT user_id FROM posts WHERE ID = $post_id");
 			$sth->execute();
 			$user_id = $sth->fetchColumn();
-			$mailhead = "Content-type: text/html; charset=iso-8859-1\r\n";
-			$message = "Camagru: Someone commented on one of your posts!";
-			$sent = mail($post['email'], "Camagru password confirmation", $message, $mailhead);
-			if (!$sent)
-				die("Email configuration invalid.");
+			$sth = $db->prepare("SELECT * FROM users WHERE ID = $user_id");
+			$sth->execute();
+			$user = $sth->fetchColumn();
+			if ($user['sendmail'] == 1) {
+				$mailhead = "Content-type: text/html; charset=iso-8859-1\r\n";
+				$message = "Camagru: Someone commented on one of your posts!";
+				$sent = mail($post['email'], "Camagru password confirmation", $message, $mailhead);
+				if (!$sent)
+					die("Email configuration invalid.");
+			}
 		}
 	} catch (Exception $e) {
 		die("Error!: " . $e->getMessage() . " <br/>");
