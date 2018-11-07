@@ -3,7 +3,7 @@
 $db_name = "camagru";
 $db_dsn = "mysql:host=localhost";
 $db_user = "root";
-$db_pass = "root";
+$db_pass = "rootroot";
 
 function db_open()
 {
@@ -21,12 +21,29 @@ function get_username($id)
 {
 	try {
 		$db = db_open();
-		$user = $db->query("SELECT * FROM users WHERE ID = $id");
+		$user = $db->query("SELECT * FROM users");
 		foreach ($user as $u)
 		{
 			if ($u['ID'] == $id)
 			{
 				return $u['username'];
+			}
+		}
+	} catch (PDOException $e) {
+		die("Error!: " . $e->getMessage() . "<br/>");
+	}
+}
+
+function get_id($username)
+{
+	try {
+		$db = db_open();
+		$user = $db->query("SELECT * FROM users");
+		foreach ($user as $u)
+		{
+			if ($u['username'] == $username)
+			{
+				return $u['ID'];
 			}
 		}
 	} catch (PDOException $e) {

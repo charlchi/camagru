@@ -1,5 +1,5 @@
 
-function validate()
+function validate_pass()
 {
 	var http = new XMLHttpRequest();
 	http.open("POST", "settings/parse_modif_pass.php", true);
@@ -9,7 +9,7 @@ function validate()
 		if (http.readyState == 4 && http.status == 200) {
 			var response = http.responseText;
 			if (response == "OK")
-				window.location.href = "index.php";
+				window.location.href = "settings.php";
 			else
 				message.innerHTML = response;
 		}

@@ -16,7 +16,7 @@ function validate_post($post) {
 		$ret['username'] = $username;
 	}
 	if (isset($post['nusername'])) {
-		$username = strip_str($post['nusername']);
+		$nusername = strip_str($post['nusername']);
 		if (!preg_match("/^[a-zA-Z]*$/", $nusername))
 			return "Your username may only contain letters";
 		$ret['nusername'] = $nusername;

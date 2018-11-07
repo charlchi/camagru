@@ -9,20 +9,19 @@ require_once('header.php');
 
 <script type="text/javascript">
 	
-function comment()
+function react(postid, type)
 {
 	var msg = document.getElementById("commentfield").value;
-	if (msg != '') {
+	if (type == 1 || (msg != '' && type == 0)) {
 		var http = new XMLHttpRequest();
-		http.open("POST", "comment.php", true);
+		http.open("POST", "reaction.php", true);
 		http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		http.onreadystatechange = () => {
+		http.onreadystatechange = function() {
 			if (http.readyState == 4 && http.status == 200) {
 				location.reload();
 			}
 		};
-		
-		poststr = "msg="+msg;
+		poststr = "msg="+msg+"&id="+postid+"&type="+type;
 		http.send(poststr);
 	}
 }
@@ -37,7 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	$db = db_open();
 	
 	try {
-		echo "<div id='post$pid' class='post' style='font-size: 0.95em'>";
+		$pid = intval($_GET['p']);
+		if ($pid != 0)
+			echo "<div id='post$pid' class='post' style='font-size: 0.95em'>";
 		$posts = $db->query("SELECT * FROM posts ORDER BY date DESC");
 		foreach ($posts as $row) {
 			if ($row['ID'] == intval($_GET['p'])) {
@@ -64,7 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 				$likes += 1;
 			}
 		}
-		echo "<div style='float: left;'>" . $likes . " &hearts;</div><br><br>";
+		if ($pid != 0)
+			echo "<div style='float: left;'>" . $likes . " &hearts;</div><br><br>";
 		
 		$reactions = $db->query("SELECT * FROM reactions WHERE post_id = $postid ORDER BY date DESC");
 		foreach ($reactions as $row) {
@@ -74,16 +76,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 				echo "</span><br>";
 			}
 		}
-		echo "</div><br>";
+		if ($pid != 0)
+			echo "</div><br>";
+		if ($_COOKIE['username'] != '') {
+			echo "<input id='commentfield' type='text' placeholder='...' name='pass' required>";
+			echo "<input id='comm' type='button' value='Comment' onclick='react($pid, 0); return false;' />";
+			echo "<input id='like' type='button' value='Like' onclick='react($pid, 1); return false;' />";
+		}
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";
 	}
-
-	if ($_COOKIE['username'] != '') {
-		echo "<input id='commentfield' type='text' placeholder='...' name='pass' required>";
-		echo "<input id='snapp' type='button' value='Comment' onclick='comment(); return false;' />";
-	}
-
+	$dbh = null;
 }
 
 ?>

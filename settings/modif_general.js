@@ -1,8 +1,8 @@
 
-function validate_email()
+function validate_general()
 {
 	var http = new XMLHttpRequest();
-	http.open("POST", "settings/parse_modif_email.php", true);
+	http.open("POST", "settings/parse_modif_general.php", true);
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	http.onreadystatechange = function() {
 		var message = document.getElementById("message");
@@ -15,8 +15,8 @@ function validate_email()
 		}
 	};
 	poststr = "";
-	["email", "nemail"].forEach(function (s, i) {
-		poststr += s + "=" + document.forms["this"][s].value + "&";
+	["mail"].forEach(function (s, i) {
+		poststr += s + "=" + document.forms["this"][s].checked + "&";
 	});
 	http.send(poststr);
 }

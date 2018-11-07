@@ -1,5 +1,5 @@
 
-<form name="this" onsubmit="validate(); return false" autocomplete="off">
+<form name="this" onsubmit="validate_email(); return false" autocomplete="off">
 	<div class= "block">
 
 		<h3>Change email</h3>

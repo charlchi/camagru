@@ -29,7 +29,6 @@ function update_overlay(name)
 canvas_div.addEventListener("wheel", scale_overlay);
 canvas_div.addEventListener('click', position_overlay, true);
 canvas_div.addEventListener('drag', position_overlay, true);
-
 function position_overlay(e)
 {
 	var img = new Image;
@@ -51,9 +50,8 @@ function scale_overlay(e)
 {
 	var img = new Image;
 	img.onload = function() {
-		console.log(s, this.width);
 		s += e.deltaY > 0 ? 10: -10;
-		if (s + img.width < 10 || s + img.height < 10)
+		if (s + img.width < 20 || s + img.height < 20)
 			s = 0;
 		position_overlay(e);
 	}
@@ -62,12 +60,6 @@ function scale_overlay(e)
 	e.stopPropagation();
 }
 
-function handleDevices(devices)
-{
-	for (var i = 0; i !== devices.length; ++i) {
-		console.log("stuff " + devices[i].label);
-	}
-}
 
 function startStream(stream)
 {
@@ -107,6 +99,22 @@ function discard_picture()
 	snap.style.display = 'block';
 	snapd.style.display = 'none';
 	snapp.style.display = 'none';
+}
+
+function post_picture()
+{
+	var img_pic = canvas.toDataURL("image/png", 0.9);
+	var img_ovr = overlay.toDataURL("image/png", 0.9);
+	var http = new XMLHttpRequest();
+	http.open("POST", "newpost.php", true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
+			location.reload();
+		}
+	};
+	var str = "pic="+img_pic+"&overlay="+img_ovr+"&w="+canvas.width+"&h="+canvas.height;
+	http.send(str);
 }
 
 function snap_picture()

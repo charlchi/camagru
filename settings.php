@@ -19,7 +19,7 @@ function loadDoc(file) {
 </script>
 
 <div id="container">
-	<button type="button" onclick="loadDoc('settings/modif_settings')"> General settings </button>
+	<button type="button" onclick="loadDoc('settings/modif_general')"> General settings </button>
 	<button type="button" onclick="loadDoc('settings/modif_user')"> Username </button>
 	<button type="button" onclick="loadDoc('settings/modif_pass')"> Password </button>
 	<button type="button" onclick="loadDoc('settings/modif_email')"> Email </button>
@@ -29,6 +29,7 @@ function loadDoc(file) {
 <script type="text/javascript" src="settings/modif_user.js"></script>
 <script type="text/javascript" src="settings/modif_pass.js"></script>
 <script type="text/javascript" src="settings/modif_email.js"></script>
+<script type="text/javascript" src="settings/modif_general.js"></script>
 
 <?php
 

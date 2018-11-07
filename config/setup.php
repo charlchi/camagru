@@ -21,7 +21,7 @@ try {
 	")");
 	$db->query("Create TABLE posts (".
 		"ID int NOT NULL AUTO_INCREMENT UNIQUE,".
-		"user_id int, path varchar(100), date int".
+		"user_id int, path varchar(255), date int".
 	")");
 	$db->query("Create TABLE reactions (".
 		"ID int NOT NULL AUTO_INCREMENT UNIQUE,".

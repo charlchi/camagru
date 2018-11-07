@@ -1,8 +1,9 @@
 <?php
 
 // TODO:
-// COPYSAMPLED
-// .htaccess
+// fix thingy
+// delete own posts
+// 
 
 session_start();
 
