@@ -5,21 +5,22 @@ include_once("util.php");
 include_once("config/database.php");
 require_once('header.php');
 
+$message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$db = db_open();
 	try {
-		$address = $post['email'];
+		$address = htmlspecialchars($_POST['email']);
 		$newpass = bin2hex(random_bytes(10)) . "1";
-		$newpass = hash("whirlpool", $newpass);
-		$stm = $db->prepare("UPDATE users SET pass = ? ". "WHERE email = ?");
-		$stm->execute(array($newpass, $address));
+		$newhash = hash("whirlpool", $newpass);
+		$stm = $db->prepare("UPDATE users SET pass = ? WHERE email = ?");
+		$stm->execute(array($newhash, $address));
 		$mailhead = "Content-type: text/html; charset=iso-8859-1\r\n";
-		$message = "Your new Camagru password is $newpass";
-		$sent = mail($address, "Camagru password confirmation", $message, $mailhead);
+		$mailmsg = "Your new Camagru password is $newpass";
+		$sent = mail($_POST['email'], "Camagru : New password", $mailmsg, $mailhead);
 		if (!$sent)
-			die("Email configuration invalid.");
-		echo "OK";
+			die("Email invalid.");
+		$message = "An email has been sent to your account with your new password.<br>Remember to change your password!<br>";
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";
 	}

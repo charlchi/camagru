@@ -15,7 +15,7 @@
 
 <div id='header'>
 	<?php
-	if ($_COOKIE['username'] == '')
+	if (!isset($_COOKIE['username']) || $_COOKIE['username'] == '')
 	{
 		echo "<a class='headeritem' href='gallery.php?p=0'  >Gallery</a>";
 		echo "<a class='headeritem' href='login.php'      >Login</a>";
@@ -27,7 +27,7 @@
 		echo "<a class='headeritem' href='gallery.php?p=0'  >Gallery</a>";
 		echo "<a class='headeritem' href='settings.php'>Settings</a>";
 		echo "<a class='headeritem' href='logout.php'    >Logout</a>";
-		
 	}
+
 	?>
 </div>

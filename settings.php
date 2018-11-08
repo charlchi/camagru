@@ -1,6 +1,11 @@
 
 <?php
+
+if ($_COOKIE['username'] == '')
+	header("location:gallery.php");
+
 require_once('header.php');
+
 ?>
 
 <script type="text/javascript">

@@ -11,10 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		foreach ($db->query("SELECT * FROM users") as $row) {
 			if ($post['mail'] == "true") {
 				$stm = $db->prepare("UPDATE users SET sendmail = ? WHERE username = ?");
-				$stm->execute(array(1, $_COOKIES['username']));
-			} else if ($post['mail'] == "true") {
+				$stm->execute(array(1, $_COOKIE['username']));
+			} else if ($post['mail'] == "false") {
 				$stm = $db->prepare("UPDATE users SET sendmail = ? WHERE username = ?");
-				$stm->execute(array(0, $_COOKIES['username']));
+				$stm->execute(array(0, $_COOKIE['username']));
 			}
 		}
 		echo "OK";

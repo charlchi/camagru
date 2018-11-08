@@ -20,17 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			time()
 		));
 		if (intval($post['type']) == 0) {
-			// get ID of user whose post it is
 			$sth = $db->prepare("SELECT user_id FROM posts WHERE ID = $post_id");
 			$sth->execute();
-			$user_id = $sth->fetchColumn();
+			$user_id = $sth->fetch();
+			$user_id = $user_id['user_id'];
 			$sth = $db->prepare("SELECT * FROM users WHERE ID = $user_id");
 			$sth->execute();
-			$user = $sth->fetchColumn();
+			$user = $sth->fetch();
 			if ($user['sendmail'] == 1) {
 				$mailhead = "Content-type: text/html; charset=iso-8859-1\r\n";
-				$message = "Camagru: Someone commented on one of your posts!";
-				$sent = mail($post['email'], "Camagru password confirmation", $message, $mailhead);
+				$message = "Someone commented on one of your posts!";
+				$sent = mail($user['email'], "Camagru : Comment", $message, $mailhead);
 				if (!$sent)
 					die("Email configuration invalid.");
 			}

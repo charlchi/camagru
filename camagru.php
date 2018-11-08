@@ -1,11 +1,13 @@
 <?php
 
 // TODO:
-// fix thingy
+// upload a picture from drive
 // delete own posts
-// 
 
 session_start();
+
+if ($_COOKIE['username'] == '')
+	header("location:gallery.php");
 
 include_once("header.php");
 

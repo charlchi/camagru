@@ -15,22 +15,26 @@ function print_pages($posts)
 	$i = 0;
 	$page = 0;
 	$count = count($posts);
-	if ($count > 0)
-		echo "<div style='padding:5px'>Page: "; 
-	while ($i < $count - 1) {
-		$showval = $page + 1;
-		echo " <a style='display:inline-block;text-decoration:none;' href=gallery.php?p=$page><div style='padding-left:8px;'>$showval</div></a>";
-		$page++;
-		$i += 6;
+	if ($count > 5)
+	{
+		if ($count > 0)
+			echo "<div style='padding:5px'>Page: "; 
+		while ($i < $count - 1) {
+			$showval = $page + 1;
+			echo " <a style='display:inline-block;text-decoration:none;' href=gallery.php?p=$page><div style='padding-left:8px;'>$showval</div></a>";
+			$page++;
+			$i += 6;
+		}
+		echo "</div>";
 	}
-	echo "</div>";
+	
 }
 
 try {
 	$db = db_open();
 	$posts = $db->query("SELECT * FROM posts ORDER BY date DESC")->fetchAll();
 	print_pages($posts);
-	if ($_GET['p'] == 0)
+	if (!isset($_GET['p']) || $_GET['p'] == 0)
 		$_GET['p'] = 0;
 	$start = intval($_GET['p']) * 6;
 	$end = intval($_GET['p']) * 6 + 6;

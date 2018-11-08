@@ -6,6 +6,7 @@ require_once('header.php');
 
 <div id="container" style="">
 
+<span id="message"></span>
 
 <script type="text/javascript">
 	
@@ -18,12 +19,31 @@ function react(postid, type)
 		http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		http.onreadystatechange = function() {
 			if (http.readyState == 4 && http.status == 200) {
-				location.reload();
+				if (type == 1) {
+					location.reload();
+				} else if (type == 0) {
+					document.getElementById("message").innerHTML = http.responseText;
+				}
 			}
 		};
 		poststr = "msg="+msg+"&id="+postid+"&type="+type;
 		http.send(poststr);
 	}
+}
+
+function deletepost(pid)
+{
+	console.log("hi");
+	var http = new XMLHttpRequest();
+	http.open("POST", "deletepost.php", true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {
+		if (http.readyState == 4 && http.status == 200) {
+			window.location.href = "gallery.php";
+		}
+	};
+	poststr = "pid="+pid;
+	http.send(poststr);
 }
 
 </script>
@@ -35,11 +55,14 @@ include_once("config/database.php");
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	$db = db_open();
 	
+	if (!isset($_GET['p']))
+		header("Location:gallery.php");
 	try {
 		$pid = intval($_GET['p']);
 		if ($pid != 0)
 			echo "<div id='post$pid' class='post' style='font-size: 0.95em'>";
 		$posts = $db->query("SELECT * FROM posts ORDER BY date DESC");
+		$user = "";
 		foreach ($posts as $row) {
 			if ($row['ID'] == intval($_GET['p'])) {
 				$id = $row['user_id'];
@@ -67,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		}
 		if ($pid != 0)
 			echo "<div style='float: left;'>" . $likes . " &hearts;</div><br><br>";
-		
 		$reactions = $db->query("SELECT * FROM reactions WHERE post_id = $postid ORDER BY date DESC");
 		foreach ($reactions as $row) {
 			if (intval($row['type']) == 0) {
@@ -78,11 +100,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		}
 		if ($pid != 0)
 			echo "</div><br>";
-		if ($_COOKIE['username'] != '') {
+		if ($_COOKIE['username'] != '' && $pid != 0) {
 			echo "<input id='commentfield' type='text' placeholder='...' name='pass' required>";
 			echo "<input id='comm' type='button' value='Comment' onclick='react($pid, 0); return false;' />";
 			echo "<input id='like' type='button' value='Like' onclick='react($pid, 1); return false;' />";
 		}
+		if ($_COOKIE['username'] != "" && $_COOKIE['username'] == $user)
+			echo "<br><br><input id='delete' type='button' value='Delete this post' onclick='deletepost($pid); return false;' />";
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";
 	}
