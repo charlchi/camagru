@@ -19,11 +19,7 @@ function react(postid, type)
 		http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		http.onreadystatechange = function() {
 			if (http.readyState == 4 && http.status == 200) {
-				if (type == 1) {
-					location.reload();
-				} else if (type == 0) {
-					document.getElementById("message").innerHTML = http.responseText;
-				}
+				location.reload();
 			}
 		};
 		poststr = "msg="+msg+"&id="+postid+"&type="+type;
