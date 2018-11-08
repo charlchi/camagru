@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$post = $_POST;
 	$db = db_open();
 	try {
-		$post_id = intval($post['id'])
+		$post_id = intval($post['id']);
 		$stm = $db->prepare("INSERT INTO reactions ".
 			"(user_id, post_id, type, data, date)".
 			"VALUES (?, ?, ?, ?, ?)");
