@@ -32,6 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			$file,
 			time()
 		));
+		$stm = $db->prepare("SELECT MAX(ID) FROM posts");
+		$stm->execute();
+		$lastID = $stm->fetch();
+		echo $lastID['ID'];
 	} catch (Exception $e) {
 		die($e->getMessage());
 	}	

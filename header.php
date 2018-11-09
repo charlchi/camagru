@@ -23,7 +23,7 @@
 	}
 	else
 	{
-		echo "<a class='headeritem' href='camagru.php'    >Post</a>";
+		echo "<a class='headeritem' href='camagru.php'    >Camagru</a>";
 		echo "<a class='headeritem' href='gallery.php?p=0'  >Gallery</a>";
 		echo "<a class='headeritem' href='settings.php'>Settings</a>";
 		echo "<a class='headeritem' href='logout.php'    >Logout</a>";

@@ -110,7 +110,8 @@ function post_picture()
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	http.onreadystatechange = function () {
 		if (http.readyState == 4 && http.status == 200) {
-			location.reload();
+			console.log(http.responseText);
+			//location.reload();
 		}
 	};
 	var str = "pic="+img_pic+"&overlay="+img_ovr+"&w="+canvas.width+"&h="+canvas.height;
