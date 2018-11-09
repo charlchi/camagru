@@ -96,12 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		}
 		if ($pid != 0)
 			echo "</div><br>";
-		if ($_COOKIE['username'] != '' && $pid != 0) {
+		if (isset($_COOKIE['username']) && $_COOKIE['username'] != '' && $pid != 0) {
 			echo "<input id='commentfield' type='text' placeholder='...' name='pass' required>";
 			echo "<input id='comm' type='button' value='Comment' onclick='react($pid, 0); return false;' />";
 			echo "<input id='like' type='button' value='Like' onclick='react($pid, 1); return false;' />";
 		}
-		if ($_COOKIE['username'] != "" && $_COOKIE['username'] == $user)
+		if (isset($_COOKIE['username']) && $_COOKIE['username'] != "" && $_COOKIE['username'] == $user)
 			echo "<br><br><input id='delete' type='button' value='Delete this post' onclick='deletepost($pid); return false;' />";
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";

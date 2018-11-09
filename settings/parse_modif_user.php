@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 				setcookie('username', $post['nusername'], time()+360000, "/");
 			}
 		}
+		echo "OK";
 	} catch (Exception $e) {
 		echo "Error!: " . $e->getMessage() . "<br/>";
 	}

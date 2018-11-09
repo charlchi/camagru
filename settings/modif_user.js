@@ -18,6 +18,5 @@ function validate_user()
 	["username", "nusername"].forEach(function (s, i) {
 		poststr += s + "=" + document.forms["this"][s].value + "&";
 	});
-	console.log(poststr);
 	http.send(poststr);
 }

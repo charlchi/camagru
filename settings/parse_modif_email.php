@@ -11,11 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 	$db = db_open();
 	try {
-
+		if ($post['email'] == $post['nemail'])
+			die("Both addresses provided are the same.");
+		foreach ($db->query("SELECT * FROM users") as $row) {
+			if ($post['nemail'] == $row['email'])
+				die("New address already in use.");
+		}
 		foreach ($db->query("SELECT * FROM users") as $row) {
 			if ($post['email'] == $row['email']) {
-				if ($post['nemail'] == $row['email'])
-					die("You've already used this email.");
 				$stm = $db->prepare("UPDATE users SET email = ? ".
 					"WHERE username = ?");
 				$stm->execute(array($post['nemail'], $row['username']));

@@ -19,8 +19,6 @@ if (isset($_GET['token']))
 	}	
 }
 
-header();
-
 ?>
 
 <script type="text/javascript">

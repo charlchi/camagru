@@ -36,7 +36,7 @@ function validate()
 		<div class= "block">
 
 			<h2>Register</h2>
-			<h4>Fill in your details and we'll send you a confirmation email.</h4>
+			<h4>Fill in your details</h4>
 
 			<p id="message" style='color:#ff0000'></p>
 
@@ -53,6 +53,9 @@ function validate()
     		<input type="password" placeholder="..." name="cpass" required><br/>
     		<p></p>
     		<button type="submit">Register</button>
+    		<br><br>
+    		Once you've registered we'll send you a confirmation email.<br>
+    		Follow the link in the email and you'll be able log in to your account.
     		
 		</div>
 	</form>
